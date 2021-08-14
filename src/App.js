@@ -15,25 +15,50 @@ class Button extends React.Component {
         this.addCharacter = this.addCharacter.bind(this);
     }
 
+    bracketCheck(str){
+        let count = 0;
+        for(let i = 0; i < str.length; i++){
+            if(str.charAt(i) === '('){
+                count++;
+            }
+            else if (str.charAt(i) === ')'){
+                count--;
+            }
+            if(count < 0){
+                return false;
+            }
+        }
+        return true;
+    }
+
     addCharacter() {
         let textOutput = document.getElementById('output').value;
+        if (textOutput === 'undefined' || textOutput === 'Infinity') {
+            document.getElementById('output').value = '';
+            textOutput = '';
+        }
+
         if (this.props.dataFromParent === '<') {
             document.getElementById('output').value = textOutput.substring(0, textOutput.length - 1);
-        }
-        else if(this.props.dataFromParent === '<<'){
+        } else if (this.props.dataFromParent === '<<') {
             document.getElementById('output').value = '';
-        }
-        else if(this.props.dataFromParent === '='){
-            document.getElementById('output').value = eval(textOutput.replace('÷','/').replace('x','*'));
-        }
-        else {
+        } else if (this.props.dataFromParent === '=') {
+            let fixedInput = textOutput.replace('÷', '/').replace('x', '*');
+            let regExp = '(\\d*\\.?\\d*[+\\-*\\/])*(\\d*\\.?\\d*)'
+            if(fixedInput.match(regExp) && this.bracketCheck(fixedInput)) {
+                document.getElementById('output').value = eval(fixedInput);
+            }
+            else{
+                document.getElementById('output').value = 'undefined';
+            }
+        } else {
             document.getElementById('output').value = textOutput.concat(this.props.dataFromParent);
         }
     }
 
     render() {
         return (
-            <button className="press" onClick={this.addCharacter}>
+            <button className={this.props.buttonType} onClick={this.addCharacter}>
                 {this.props.dataFromParent}
             </button>
         )
@@ -41,8 +66,8 @@ class Button extends React.Component {
 }
 
 class Grid extends React.Component {
-    renderButton(str) {
-        return <Button dataFromParent={str}/>;
+    renderButton(str, type) {
+        return <Button dataFromParent={str} buttonType={type}/>;
     }
 
     render() {
@@ -52,30 +77,30 @@ class Grid extends React.Component {
                     <input type="text" value="" id={'output'} readOnly/>
                 </div>
                 <div className="grid">
-                    {this.renderButton('(')}
-                    {this.renderButton(')')}
-                    {this.renderButton('<')}
-                    {this.renderButton('<<')}
+                    {this.renderButton('(', 'ope')}
+                    {this.renderButton(')', 'ope')}
+                    {this.renderButton('<', 'ope')}
+                    {this.renderButton('<<', 'ope')}
 
-                    {this.renderButton('7')}
-                    {this.renderButton('8')}
-                    {this.renderButton('9')}
-                    {this.renderButton('÷')}
+                    {this.renderButton('7', 'num')}
+                    {this.renderButton('8', 'num')}
+                    {this.renderButton('9', 'num')}
+                    {this.renderButton('÷', 'ope')}
 
-                    {this.renderButton('4')}
-                    {this.renderButton('5')}
-                    {this.renderButton('6')}
-                    {this.renderButton('x')}
+                    {this.renderButton('4', 'num')}
+                    {this.renderButton('5', 'num')}
+                    {this.renderButton('6', 'num')}
+                    {this.renderButton('x', 'ope')}
 
-                    {this.renderButton('1')}
-                    {this.renderButton('2')}
-                    {this.renderButton('3')}
-                    {this.renderButton('-')}
+                    {this.renderButton('1', 'num')}
+                    {this.renderButton('2', 'num')}
+                    {this.renderButton('3', 'num')}
+                    {this.renderButton('-', 'ope')}
 
-                    {this.renderButton('0')}
-                    {this.renderButton('.')}
-                    {this.renderButton('=')}
-                    {this.renderButton('+')}
+                    {this.renderButton('0', 'num')}
+                    {this.renderButton('.', 'num')}
+                    {this.renderButton('=', 'ope')}
+                    {this.renderButton('+', 'ope')}
                 </div>
             </div>
         );

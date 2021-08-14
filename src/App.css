@@ -1,38 +1,40 @@
 .App {
-  text-align: center;
+    text-align: center;
 }
 
-.press{
-  text-align: center;
-  padding: 32px 32px;
-  margin: 2px 2px;
-}
-.display{
-  margin-top: 2px;
-  margin-bottom: 2px;
-}
-input{
-  text-align: right;
-  font-size: 20px;
-}
-button{
-  font-size: 20px;
+.num {
+    text-align: center;
+    padding: 32px 32px;
+    margin: 2px 2px;
+    background-color: whitesmoke;
 }
 
-.grid{
-  position: absolute;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  width: 400px;
-  left: 50%;
-  transform: translate(-50%,0);
+.ope {
+    text-align: center;
+    padding: 32px 32px;
+    margin: 2px 2px;
+    background-color: gray;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.display {
+    margin-top: 10px;
+    margin-bottom: 2px;
+}
+
+input {
+    text-align: right;
+    font-size: 20px;
+}
+
+button {
+    font-size: 20px;
+}
+
+.grid {
+    position: absolute;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    width: 400px;
+    left: 50%;
+    transform: translate(-50%, 0);
 }
