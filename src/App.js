@@ -15,20 +15,19 @@ class Button extends React.Component {
         this.addCharacter = this.addCharacter.bind(this);
     }
 
-    bracketCheck(str){
+    bracketCheck(str) {
         let count = 0;
-        for(let i = 0; i < str.length; i++){
-            if(str.charAt(i) === '('){
+        for (let i = 0; i < str.length; i++) {
+            if (str.charAt(i) === '(') {
                 count++;
-            }
-            else if (str.charAt(i) === ')'){
+            } else if (str.charAt(i) === ')') {
                 count--;
             }
-            if(count < 0){
+            if (count < 0) {
                 return false;
             }
         }
-        return true;
+        return count === 0;
     }
 
     addCharacter() {
@@ -45,10 +44,9 @@ class Button extends React.Component {
         } else if (this.props.dataFromParent === '=') {
             let fixedInput = textOutput.replace('÷', '/').replace('x', '*');
             let regExp = '(\\d*\\.?\\d*[+\\-*\\/])*(\\d*\\.?\\d*)'
-            if(fixedInput.match(regExp) && this.bracketCheck(fixedInput)) {
+            if (fixedInput.match(regExp) && this.bracketCheck(fixedInput)) {
                 document.getElementById('output').value = eval(fixedInput);
-            }
-            else{
+            } else {
                 document.getElementById('output').value = 'undefined';
             }
         } else {
